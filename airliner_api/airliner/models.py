@@ -145,7 +145,7 @@ class Seat(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.plane} - {self.seat_number}"
+        return f"{self.plane} - {self.seat_type} - {self.row}{self.aisle}"
     
     class Meta:
         verbose_name_plural = 'Seats'
@@ -259,7 +259,7 @@ class Booking(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.customer} - {self.flight} - {self.seat}"
+        return f"{self.customer} - {self.booking_date}"
     
     class Meta:
         verbose_name_plural = 'Bookings'

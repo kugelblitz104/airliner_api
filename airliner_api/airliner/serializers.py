@@ -7,7 +7,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email', 'groups']
 
-
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
@@ -28,13 +27,11 @@ class AirportSerializer(serializers.ModelSerializer):
         model = m.Airport
         fields = '__all__'
 
-
 class AirlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = m.Airline
         fields = '__all__'
 
-        
 class PlaneModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = m.PlaneModel
