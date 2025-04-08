@@ -2,7 +2,8 @@ from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 
 from airliner.serializers import GroupSerializer, UserSerializer
-
+from airliner.models import Country
+from airliner.serializers import CountrySerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -19,4 +20,12 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all().order_by('name')
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+class CountryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows countries to be viewed or edited.
+    """
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
     permission_classes = [permissions.IsAuthenticated]
