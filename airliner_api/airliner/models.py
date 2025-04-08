@@ -4,6 +4,8 @@ from django.contrib import admin
 class Country(models.Model):
     code = models.CharField(max_length=3)
     name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -64,6 +66,7 @@ class PlaneModel(models.Model):
     restrooms = models.IntegerField(null=True, blank=True)
     crew_capacity = models.IntegerField(help_text='not including cockpit crew', null=True, blank=True)
     cockpit_crew_capacity = models.IntegerField(help_text='not including flight attendants', null=True, blank=True)
+    passenger_capacity = models.IntegerField(null=True, blank=True)
     range = models.DecimalField(help_text='kilometers', decimal_places=5, max_digits=13, null=True, blank=True)
     max_speed = models.DecimalField(help_text='km/h', decimal_places=5, max_digits=13, null=True, blank=True)
     cruising_speed = models.DecimalField(help_text='km/h', decimal_places=5, max_digits=13, null=True, blank=True)
@@ -73,28 +76,30 @@ class PlaneModel(models.Model):
     length = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
     wingspan = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
     height = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
-    passenger_capacity = models.IntegerField(null=True, blank=True)
     length = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
     wingspan = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
     height = models.DecimalField(help_text='meters', decimal_places=5, max_digits=13, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return f"{self.name} ({self.manufacturer})"
+    
     @admin.display(description='Total Capacity')
     def total_capacity(self):
         return self.passenger_capacity or 0 + self.crew_capacity or 0 + self.cockpit_crew_capacity or 0
     
     class Meta:
-        verbose_name_plural = 'Plane Models'
+        verbose_name_plural = 'Models'
         ordering = ['manufacturer', 'name']
           
 class Plane(models.Model):
     model = models.ForeignKey(PlaneModel, on_delete=models.CASCADE)
     airline = models.ForeignKey(Airline, on_delete=models.CASCADE, null=True, blank=True)
-    airport = models.ForeignKey(Airport, on_delete=models.CASCADE, null=True, blank=True)
+    airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=20, choices=[('active', 'Active'), ('inactive', 'Inactive')], default='active')
     registration_number = models.CharField(max_length=10, unique=True)
-    manufacturing_year = models.IntegerField(null=True, blank=True)
+    manufacture_date = models.DateField(null=True, blank=True)
     last_maintenance_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
