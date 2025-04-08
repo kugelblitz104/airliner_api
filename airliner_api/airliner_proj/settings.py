@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secret_key = os.getenv('DJANGO_AIRLINER_SECRET_KEY')
+secret_key = os.getenv('DJANGO_AIRLINER_SECRET_KEY', 'secretsecretsecret')
 SECRET_KEY = secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -81,14 +81,21 @@ WSGI_APPLICATION = 'airliner_proj.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'init_command' : 'set default_storage_engine=INNODB',
-            'read_default_file': '../../mysql.cnf',
-        },
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'init_command' : 'set default_storage_engine=INNODB',
+#             'read_default_file': '../../mysql.cnf',
+#         },
+#     }
+# }
 
 
 # Password validation
