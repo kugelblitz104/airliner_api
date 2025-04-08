@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from airliner.models import Address, Airport, Airline, PlaneModel, Plane
-
+import airliner.models as m
 class AddressAdmin(admin.ModelAdmin):
     fields = ['street_num', 'street_name', 'city', 'state', 'country', 'zip_code']
     list_filter = ['city', 'state', 'country']
@@ -44,8 +43,16 @@ class PlaneAdmin(admin.ModelAdmin):
     search_fields = ['registration_number', 'model__name', 'airline__name']
     list_per_page = 100
 
-admin.site.register(Address, AddressAdmin)
-admin.site.register(Airport, AirportAdmin)
-admin.site.register(Airline, AirlineAdmin)    
-admin.site.register(PlaneModel, PlaneModelAdmin)
-admin.site.register(Plane, PlaneAdmin)
+admin.site.register(m.Address, AddressAdmin)
+admin.site.register(m.Airport, AirportAdmin)
+admin.site.register(m.Airline, AirlineAdmin)    
+admin.site.register(m.PlaneModel, PlaneModelAdmin)
+admin.site.register(m.Plane, PlaneAdmin)
+admin.site.register(m.Seat)
+admin.site.register(m.Flight)
+admin.site.register(m.Contact)
+admin.site.register(m.Employee)
+admin.site.register(m.Crew)
+admin.site.register(m.Customer)
+admin.site.register(m.Booking)
+admin.site.register(m.Ticket)
